@@ -1,5 +1,7 @@
+import Contact from './components/contact/Contact';
+
 const App = () => {
-	return <h1>Núcleo de la aplicación</h1>;
+	return <Contact />;
 };
 
 export default App;
