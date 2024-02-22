@@ -19,7 +19,7 @@ const Contact = () => {
 	const [formValues, setFormValues] = useState({
 		name: '',
 		email: '',
-		errors {
+		errors: {
 			name: false,
 			email: false
 		}
@@ -47,12 +47,13 @@ const Contact = () => {
 							event.target,
 							formValues,
 							setFormValues,
-							errors,
-							setErrors
+							// errors,
+							// setErrors
 						)
 					}
 				/>
-				{errors.name && <span>El nombre no es correcto</span>}
+				{/* {errors.name && <span>El nombre no es correcto</span>} */}
+				{formValues.errors.name && <span>El nombre no es correcto</span>}
 			</div>
 			<div>
 				<label htmlFor='email'>EMAIL</label>
@@ -72,23 +73,32 @@ const Contact = () => {
 							event.target,
 							formValues,
 							setFormValues,
-							errors,
-							setErrors
+							// errors,
+							// setErrors
 						)
 					}
 				/>
-				{errors.email && <span>El email no es correcto</span>}
+				{/* {errors.email && <span>El email no es correcto</span>} */}
+				{formValues.errors.email && <span>El email no es correcto</span>}
 			</div>
 			<input 
                 type='submit' 
                 value='SEND'
-                disabled={!Object.values(errors).every(error => !error)} 
+                // disabled={!Object.values(errors).every(error => !error)} 
+                disabled={!Object.values(formValues.errors).every(error => !error)} 
             />
 		</form>
 	);
 };
 
-const validateForm = (name, value, errors, setErrors, formValues, setFormValues) => {
+const validateForm = (
+	name, 
+	value, 
+	// errors, 
+	// setErrors, 
+	formValues, 
+	setFormValues
+	) => {
 	const formatedValue = value.trim();
 	// Expresión regular sólo admite letras
 	const regexName = /^[a-z]+$/gi;
@@ -117,7 +127,15 @@ const validateForm = (name, value, errors, setErrors, formValues, setFormValues)
 		// validación
 		const isValidEmail = !regexEmail.test(formatedValue);
 
-		setErrors({ ...errors, email: isValidEmail });
+		// setErrors({ ...errors, email: isValidEmail });
+
+		setFormValues({
+			...formValues,
+			errors: {
+				...formValues.errors,
+				email: isValidEmail
+			}
+		})
 	}
 };
 
@@ -126,8 +144,8 @@ const changeFormValues = (
 	input,
 	formValues,
 	setFormValues,
-	errors,
-	setErrors
+	// errors,
+	// setErrors
 ) => {
 	// const name = input.name;
 	// const value = input.value;
@@ -140,7 +158,8 @@ const changeFormValues = (
 
 	// Se pone name entre corchetes para acceder al valor de la propiedad name, que es name o email
 	setFormValues({ ...formValues, [name]: value });
-	validateForm(name, value, errors, setErrors);
+	// validateForm(name, value, errors, setErrors);
+	validateForm(name, value, formValues, setFormValues);
 };
 
 /* Cada valor por separado */
