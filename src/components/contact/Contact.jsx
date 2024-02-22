@@ -2,16 +2,27 @@ import { useState } from 'react';
 
 const Contact = () => {
 
+	// Validación usando 2 estados
 	// Estado para guardar los valores del formulario
-	const [formValues, setFormValues] = useState({
-		name: '',
-		email: ''
-	});
+	// const [formValues, setFormValues] = useState({
+	// 	name: '',
+	// 	email: ''
+	// });
 
 	// Estado para gestionar los errores del formulario. Sólo sirve para mostrar los mensajes
-	const [errors, setErrors] = useState({
-		name: false,
-		email: false
+	// const [errors, setErrors] = useState({
+	// 	name: false,
+	// 	email: false
+	// });
+
+	// Validación usando 1 sólo estado
+	const [formValues, setFormValues] = useState({
+		name: '',
+		email: '',
+		errors {
+			name: false,
+			email: false
+		}
 	});
 
 	console.log(formValues);
@@ -77,7 +88,7 @@ const Contact = () => {
 	);
 };
 
-const validateForm = (name, value, errors, setErrors) => {
+const validateForm = (name, value, errors, setErrors, formValues, setFormValues) => {
 	const formatedValue = value.trim();
 	// Expresión regular sólo admite letras
 	const regexName = /^[a-z]+$/gi;
@@ -85,11 +96,21 @@ const validateForm = (name, value, errors, setErrors) => {
 		/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
 	if (name === 'name') {
-		// validación
+		
 		const isValidName = !regexName.test(formatedValue);
 
-		console.log(isValidName);
-		setErrors({ ...errors, name: isValidName });
+		// Validando con 2 estados
+		// console.log(isValidName);
+		// setErrors({ ...errors, name: isValidName });
+
+		// Validando con 1 sólo estado
+		setFormValues({
+			...formValues,
+			errors: {
+				...formValues.errors,
+				name: isValidName
+			}
+		})
 	}
 
 	if (name === 'email') {
