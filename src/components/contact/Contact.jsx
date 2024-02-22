@@ -1,11 +1,14 @@
 import { useState } from 'react';
 
 const Contact = () => {
+
+	// Estado para guardar los valores del formulario
 	const [formValues, setFormValues] = useState({
 		name: '',
 		email: ''
 	});
 
+	// Estado para gestionar los errores del formulario. Sólo sirve para mostrar los mensajes
 	const [errors, setErrors] = useState({
 		name: false,
 		email: false
